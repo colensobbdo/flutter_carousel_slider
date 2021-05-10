@@ -115,6 +115,9 @@ class CarouselOptions {
   /// Whether or not to disable the `Center` widget for each slide.
   final bool disableCenter;
 
+  /// If we need the slider to be curved (in a evenly spread curve) we can set the curve strength (0 - 100, where 0 is a flat line)
+  final int curveStrength;
+
   CarouselOptions({
     this.height,
     this.aspectRatio: 16 / 9,
@@ -138,5 +141,6 @@ class CarouselOptions {
     this.pageViewKey,
     this.enlargeStrategy: CenterPageEnlargeStrategy.scale,
     this.disableCenter: false,
+    this.curveStrength,
   });
 }

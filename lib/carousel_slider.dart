@@ -281,6 +281,8 @@ class CarouselSliderState extends State<CarouselSlider>
       itemBuilder: (BuildContext context, int idx) {
         final int index = getRealIndex(idx + carouselState.initialPage,
             carouselState.realPage, widget.itemCount);
+        double screenWidth = MediaQuery.of(context).size.width;
+        double childWidth = screenWidth * widget.options.viewportFraction;
 
         return AnimatedBuilder(
           animation: carouselState.pageController,
@@ -288,14 +290,17 @@ class CarouselSliderState extends State<CarouselSlider>
               ? (widget.items.length > 0 ? widget.items[index] : Container())
               : widget.itemBuilder(context, index, idx),
           builder: (BuildContext context, child) {
-            double distortionValue = 1.0;
-            // if `enlargeCenterPage` is true, we must calculate the carousel item's height
+            // if `enlargeCenterPage` or `curveStrength` is true, we must calculate the carousel item's height
             // to display the visual effect
-            if (widget.options.enlargeCenterPage != null &&
-                widget.options.enlargeCenterPage == true) {
-              double itemOffset;
-              // pageController.page can only be accessed after the first build,
-              // so in the first build we calculate the itemoffset manually
+            // pageController.page can only be accessed after the first build,
+            // so in the first build we calculate the itemoffset manually
+            double distortionValue = 1.0;
+            double itemOffset;
+            bool carouselIsCurved = widget.options.curveStrength != null;
+            bool centerPageEnlarged =
+                widget.options.enlargeCenterPage != null &&
+                    widget.options.enlargeCenterPage == true;
+            if (carouselIsCurved || centerPageEnlarged) {
               try {
                 itemOffset = carouselState.pageController.page - idx;
               } catch (e) {
@@ -311,6 +316,8 @@ class CarouselSliderState extends State<CarouselSlider>
                       carouselState.realPage.toDouble() - idx.toDouble();
                 }
               }
+            }
+            if (centerPageEnlarged) {
               final distortionRatio =
                   (1 - (itemOffset.abs() * 0.3)).clamp(0.0, 1.0);
               distortionValue = Curves.easeOut.transform(distortionRatio);
@@ -321,8 +328,21 @@ class CarouselSliderState extends State<CarouselSlider>
                     (1 / widget.options.aspectRatio);
 
             if (widget.options.scrollDirection == Axis.horizontal) {
-              return getCenterWrapper(getEnlargeWrapper(child,
-                  height: distortionValue * height, scale: distortionValue));
+              if (carouselIsCurved) {
+                double curveStrength = widget.options.curveStrength.toDouble();
+                double degrees = (itemOffset * curveStrength) / 100;
+                Offset rotationOffset = Offset(itemOffset * childWidth / 2, 0);
+                return Transform.rotate(
+                    angle: degrees,
+                    alignment: Alignment.topCenter,
+                    origin: rotationOffset,
+                    child: getCenterWrapper(getEnlargeWrapper(child,
+                        height: distortionValue * height,
+                        scale: distortionValue)));
+              } else {
+                return getCenterWrapper(getEnlargeWrapper(child,
+                    height: distortionValue * height, scale: distortionValue));
+              }
             } else {
               return getCenterWrapper(getEnlargeWrapper(child,
                   width: distortionValue * MediaQuery.of(context).size.width,
