@@ -333,8 +333,8 @@ class CarouselSliderState extends State<CarouselSlider>
                 double degrees = (itemOffset * curveStrength) / 100;
                 Offset rotationOffset = Offset(itemOffset * childWidth / 2, 0);
                 return Transform.rotate(
-                    angle: degrees,
-                    alignment: Alignment.topCenter,
+                    angle: -1 * degrees,
+                    alignment: Alignment.bottomCenter,
                     origin: rotationOffset,
                     child: getCenterWrapper(getEnlargeWrapper(child,
                         height: distortionValue * height,
