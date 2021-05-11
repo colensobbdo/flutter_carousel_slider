@@ -64,6 +64,7 @@ class CarouselDemoHome extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          DemoItem('Curved demo', '/curved'),
           DemoItem('Basic demo', '/basic'),
           DemoItem('No center mode demo', '/nocenter'),
           DemoItem('Image carousel slider', '/image'),
@@ -79,7 +80,6 @@ class CarouselDemoHome extends StatelessWidget {
           DemoItem('Carousel change reason demo', '/reason'),
           DemoItem('Keep pageview position demo', '/position'),
           DemoItem('Multiple item in one screen demo', '/multiple'),
-          DemoItem('Curved demo', '/curved'),
         ],
       ),
     );
@@ -113,38 +113,45 @@ class CurvedDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Curved demo')),
       body: Container(
-          margin: EdgeInsets.symmetric(vertical: 50),
-          color: Colors.black,
-          child: CarouselSlider(
-            options: CarouselOptions(
-                height: 120,
-                curveStrength: 20,
-                viewportFraction: vpf,
-                enableInfiniteScroll: false,
-                enlargeCenterPage: false),
-            items: list.map((icon) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: Center(
-                          child: Container(
-                              height: itemWidth,
-                              width: itemWidth,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(itemWidth * 0.1))),
-                              child: Icon(
-                                icon,
-                                color: Colors.white.withOpacity(0.8),
-                                size: itemWidth * 0.75,
-                              ))));
-                },
-              );
-            }).toList(),
-          )),
+        margin: EdgeInsets.symmetric(vertical: 50),
+        color: Colors.black,
+        child: CarouselSlider(
+          options: CarouselOptions(
+            height: 120,
+            curveStrength: 20,
+            viewportFraction: vpf,
+            enableInfiniteScroll: false,
+            enlargeCenterPage: false,
+          ),
+          items: list.map((icon) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Container(
+                      height: itemWidth,
+                      width: itemWidth,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.5),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(itemWidth * 0.1),
+                        ),
+                      ),
+                      child: Icon(
+                        icon,
+                        color: Colors.white.withOpacity(0.8),
+                        size: itemWidth * 0.75,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }
@@ -156,15 +163,18 @@ class BasicDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Basic demo')),
       body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(),
-        items: list
-            .map((item) => Container(
-                  child: Center(child: Text(item.toString())),
-                  color: Colors.green,
-                ))
-            .toList(),
-      )),
+        child: CarouselSlider(
+          options: CarouselOptions(),
+          items: list
+              .map((item) => Container(
+                    child: Center(
+                      child: Text(item.toString()),
+                    ),
+                    color: Colors.green,
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 }
@@ -176,17 +186,18 @@ class NoCenterDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Basic demo')),
       body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(
-          disableCenter: true,
+        child: CarouselSlider(
+          options: CarouselOptions(
+            disableCenter: true,
+          ),
+          items: list
+              .map((item) => Container(
+                    child: Text(item.toString()),
+                    color: Colors.green,
+                  ))
+              .toList(),
         ),
-        items: list
-            .map((item) => Container(
-                  child: Text(item.toString()),
-                  color: Colors.green,
-                ))
-            .toList(),
-      )),
+      ),
     );
   }
 }
@@ -197,16 +208,18 @@ class ImageSliderDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Image slider demo')),
       body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(),
-        items: imgList
-            .map((item) => Container(
-                  child: Center(
+        child: CarouselSlider(
+          options: CarouselOptions(),
+          items: imgList
+              .map((item) => Container(
+                    child: Center(
                       child:
-                          Image.network(item, fit: BoxFit.cover, width: 1000)),
-                ))
-            .toList(),
-      )),
+                          Image.network(item, fit: BoxFit.cover, width: 1000),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 }
@@ -216,39 +229,40 @@ final List<Widget> imageSliders = imgList
           child: Container(
             margin: EdgeInsets.all(5.0),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              child: Stack(
+                children: <Widget>[
+                  Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(200, 0, 0, 0),
+                            Color.fromARGB(0, 0, 0, 0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
                         ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: Text(
+                        'No. ${imgList.indexOf(item)} image',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
           ),
         ))
     .toList();
@@ -259,8 +273,7 @@ class ComplicatedImageDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Complicated image slider demo')),
       body: Container(
-          child: Column(
-        children: <Widget>[
+        child: Column(children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
               autoPlay: true,
@@ -269,8 +282,8 @@ class ComplicatedImageDemo extends StatelessWidget {
             ),
             items: imageSliders,
           ),
-        ],
-      )),
+        ]),
+      ),
     );
   }
 }
@@ -281,8 +294,7 @@ class EnlargeStrategyDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Complicated image slider demo')),
       body: Container(
-          child: Column(
-        children: <Widget>[
+        child: Column(children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
               autoPlay: true,
@@ -292,8 +304,8 @@ class EnlargeStrategyDemo extends StatelessWidget {
             ),
             items: imageSliders,
           ),
-        ],
-      )),
+        ]),
+      ),
     );
   }
 }
@@ -316,43 +328,44 @@ class _ManuallyControlledSliderState extends State<ManuallyControlledSlider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Manually controlled slider')),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              CarouselSlider(
-                items: imageSliders,
-                options: CarouselOptions(enlargeCenterPage: true, height: 200),
-                carouselController: _controller,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
+      appBar: AppBar(title: Text('Manually controlled slider')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            CarouselSlider(
+              items: imageSliders,
+              options: CarouselOptions(enlargeCenterPage: true, height: 200),
+              carouselController: _controller,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: RaisedButton(
+                    onPressed: () => _controller.previousPage(),
+                    child: Text('←'),
+                  ),
+                ),
+                Flexible(
+                  child: RaisedButton(
+                    onPressed: () => _controller.nextPage(),
+                    child: Text('→'),
+                  ),
+                ),
+                ...Iterable<int>.generate(imgList.length).map(
+                  (int pageIndex) => Flexible(
                     child: RaisedButton(
-                      onPressed: () => _controller.previousPage(),
-                      child: Text('←'),
+                      onPressed: () => _controller.animateToPage(pageIndex),
+                      child: Text("$pageIndex"),
                     ),
                   ),
-                  Flexible(
-                    child: RaisedButton(
-                      onPressed: () => _controller.nextPage(),
-                      child: Text('→'),
-                    ),
-                  ),
-                  ...Iterable<int>.generate(imgList.length).map(
-                    (int pageIndex) => Flexible(
-                      child: RaisedButton(
-                        onPressed: () => _controller.animateToPage(pageIndex),
-                        child: Text("$pageIndex"),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ));
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -362,16 +375,17 @@ class NoonLoopingDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Noon-looping carousel demo')),
       body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-          enableInfiniteScroll: false,
-          initialPage: 2,
-          autoPlay: true,
+        child: CarouselSlider(
+          options: CarouselOptions(
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+            initialPage: 2,
+            autoPlay: true,
+          ),
+          items: imageSliders,
         ),
-        items: imageSliders,
-      )),
+      ),
     );
   }
 }
@@ -382,15 +396,16 @@ class VerticalSliderDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Vertical sliding carousel demo')),
       body: Container(
-          child: CarouselSlider(
-        options: CarouselOptions(
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-          scrollDirection: Axis.vertical,
-          autoPlay: true,
+        child: CarouselSlider(
+          options: CarouselOptions(
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+            scrollDirection: Axis.vertical,
+            autoPlay: true,
+          ),
+          items: imageSliders,
         ),
-        items: imageSliders,
-      )),
+      ),
     );
   }
 }
@@ -413,11 +428,9 @@ class FullscreenSliderDemo extends StatelessWidget {
             items: imgList
                 .map((item) => Container(
                       child: Center(
-                          child: Image.network(
-                        item,
-                        fit: BoxFit.cover,
-                        height: height,
-                      )),
+                        child: Image.network(item,
+                            fit: BoxFit.cover, height: height),
+                      ),
                     ))
                 .toList(),
           );
@@ -433,19 +446,20 @@ class OnDemandCarouselDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('On-demand carousel demo')),
       body: Container(
-          child: CarouselSlider.builder(
-        itemCount: 100,
-        options: CarouselOptions(
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-          autoPlay: true,
+        child: CarouselSlider.builder(
+          itemCount: 100,
+          options: CarouselOptions(
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+            autoPlay: true,
+          ),
+          itemBuilder: (ctx, index, realIdx) {
+            return Container(
+              child: Text(index.toString()),
+            );
+          },
         ),
-        itemBuilder: (ctx, index, realIdx) {
-          return Container(
-            child: Text(index.toString()),
-          );
-        },
-      )),
+      ),
     );
   }
 }
@@ -464,37 +478,39 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Carousel with indicator demo')),
-      body: Column(children: [
-        CarouselSlider(
-          items: imageSliders,
-          options: CarouselOptions(
-              autoPlay: true,
-              enlargeCenterPage: true,
-              aspectRatio: 2.0,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              }),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: imgList.map((url) {
-            int index = imgList.indexOf(url);
-            return Container(
-              width: 8.0,
-              height: 8.0,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _current == index
-                    ? Color.fromRGBO(0, 0, 0, 0.9)
-                    : Color.fromRGBO(0, 0, 0, 0.4),
-              ),
-            );
-          }).toList(),
-        ),
-      ]),
+      body: Column(
+        children: [
+          CarouselSlider(
+            items: imageSliders,
+            options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: true,
+                aspectRatio: 2.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                }),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: imgList.map((url) {
+              int index = imgList.indexOf(url);
+              return Container(
+                width: 8.0,
+                height: 8.0,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _current == index
+                      ? Color.fromRGBO(0, 0, 0, 0.9)
+                      : Color.fromRGBO(0, 0, 0, 0.4),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -532,21 +548,23 @@ class _PrefetchImageDemoState extends State<PrefetchImageDemo> {
     return Scaffold(
       appBar: AppBar(title: Text('Prefetch image slider demo')),
       body: Container(
-          child: CarouselSlider.builder(
-        itemCount: images.length,
-        options: CarouselOptions(
-          autoPlay: true,
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-        ),
-        itemBuilder: (context, index, realIdx) {
-          return Container(
-            child: Center(
+        child: CarouselSlider.builder(
+          itemCount: images.length,
+          options: CarouselOptions(
+            autoPlay: true,
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+          ),
+          itemBuilder: (context, index, realIdx) {
+            return Container(
+              child: Center(
                 child: Image.network(images[index],
-                    fit: BoxFit.cover, width: 1000)),
-          );
-        },
-      )),
+                    fit: BoxFit.cover, width: 1000),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -571,56 +589,55 @@ class _CarouselChangeReasonDemoState extends State<CarouselChangeReasonDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Change reason demo')),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              CarouselSlider(
-                items: imageSliders,
-                options: CarouselOptions(
-                  enlargeCenterPage: true,
-                  aspectRatio: 16 / 9,
-                  onPageChanged: onPageChange,
-                  autoPlay: true,
-                ),
-                carouselController: _controller,
+      appBar: AppBar(title: Text('Change reason demo')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            CarouselSlider(
+              items: imageSliders,
+              options: CarouselOptions(
+                enlargeCenterPage: true,
+                aspectRatio: 16 / 9,
+                onPageChanged: onPageChange,
+                autoPlay: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
-                    child: RaisedButton(
-                      onPressed: () => _controller.previousPage(),
-                      child: Text('←'),
-                    ),
+              carouselController: _controller,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: RaisedButton(
+                    onPressed: () => _controller.previousPage(),
+                    child: Text('←'),
                   ),
-                  Flexible(
-                    child: RaisedButton(
-                      onPressed: () => _controller.nextPage(),
-                      child: Text('→'),
-                    ),
-                  ),
-                  ...Iterable<int>.generate(imgList.length).map(
-                    (int pageIndex) => Flexible(
-                      child: RaisedButton(
-                        onPressed: () => _controller.animateToPage(pageIndex),
-                        child: Text("$pageIndex"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    Text('page change reason: '),
-                    Text(reason),
-                  ],
                 ),
-              )
-            ],
-          ),
-        ));
+                Flexible(
+                  child: RaisedButton(
+                    onPressed: () => _controller.nextPage(),
+                    child: Text('→'),
+                  ),
+                ),
+                ...Iterable<int>.generate(imgList.length).map(
+                  (int pageIndex) => Flexible(
+                    child: RaisedButton(
+                      onPressed: () => _controller.animateToPage(pageIndex),
+                      child: Text("$pageIndex"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Center(
+              child: Column(children: [
+                Text('page change reason: '),
+                Text(reason),
+              ]),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -632,14 +649,15 @@ class KeepPageviewPositionDemo extends StatelessWidget {
       body: ListView.builder(itemBuilder: (ctx, index) {
         if (index == 3) {
           return Container(
-              child: CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: 2.0,
-              enlargeCenterPage: true,
-              pageViewKey: PageStorageKey<String>('carousel_slider'),
+            child: CarouselSlider(
+              options: CarouselOptions(
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                pageViewKey: PageStorageKey<String>('carousel_slider'),
+              ),
+              items: imageSliders,
             ),
-            items: imageSliders,
-          ));
+          );
         } else {
           return Container(
             margin: EdgeInsets.symmetric(vertical: 20),
@@ -661,29 +679,30 @@ class MultipleItemDemo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Multiple item in one slide demo')),
       body: Container(
-          child: CarouselSlider.builder(
-        options: CarouselOptions(
-          aspectRatio: 2.0,
-          enlargeCenterPage: false,
-          viewportFraction: 1,
+        child: CarouselSlider.builder(
+          options: CarouselOptions(
+            aspectRatio: 2.0,
+            enlargeCenterPage: false,
+            viewportFraction: 1,
+          ),
+          itemCount: (imgList.length / 2).round(),
+          itemBuilder: (context, index, realIdx) {
+            final int first = index * 2;
+            final int second = first + 1;
+            return Row(
+              children: [first, second].map((idx) {
+                return Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Image.network(imgList[idx], fit: BoxFit.cover),
+                  ),
+                );
+              }).toList(),
+            );
+          },
         ),
-        itemCount: (imgList.length / 2).round(),
-        itemBuilder: (context, index, realIdx) {
-          final int first = index * 2;
-          final int second = first + 1;
-          return Row(
-            children: [first, second].map((idx) {
-              return Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Image.network(imgList[idx], fit: BoxFit.cover),
-                ),
-              );
-            }).toList(),
-          );
-        },
-      )),
+      ),
     );
   }
 }
