@@ -114,6 +114,7 @@ class CurvedDemo extends StatelessWidget {
       appBar: AppBar(title: Text('Curved demo')),
       body: Container(
         margin: EdgeInsets.symmetric(vertical: 50),
+        width: screenWidth,
         color: Colors.black,
         child: CarouselSlider(
           options: CarouselOptions(
@@ -597,7 +598,7 @@ class _CarouselChangeReasonDemoState extends State<CarouselChangeReasonDemo> {
               items: imageSliders,
               options: CarouselOptions(
                 enlargeCenterPage: true,
-                aspectRatio: 16 / 9,
+                aspectRatio: 10 / 9,
                 onPageChanged: onPageChange,
                 autoPlay: true,
               ),
